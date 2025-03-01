@@ -13,7 +13,7 @@ RUN npm cache clean --force
 # Copy files from local machine to virtual directory in docker image
 COPY . .
 RUN npm install
-RUN npm run build --prod --base-href "/crowdown/"
+RUN npm run build --prod --base-href="/crowdown/"
 
 
 ### STAGE 2:RUN ###
