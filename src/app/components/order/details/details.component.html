@@ -1,0 +1,128 @@
+<div class="row g-2">
+    <div class="col-xxl-9">
+        <div class="mb-4" *ngIf="order">
+            <div class="tracking-panel">
+                <ul>
+                    <!-- [ngClass]="{'d-none': order?.order_status == 'completed' || 
+                                                   order?.order_status == 'cancelled'}" -->
+                    <li [class.active]="true">
+                        <div class="panel-content">
+                            <div class="icon">
+                                <img src="assets/svg/tracking/{{order?.order_status}}.svg" class="img-fluid"
+                                    alt="image">
+                            </div>
+                            <div class="status">{{ order?.order_status | titlecase }}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <app-page-wrapper [gridClass]="'col-sm-12'" [title]="('order_number' | translate)+': #'+order?.id">
+
+            <div class="tracking-wrapper table-responsive">
+                <table class="table product-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">{{ 'image' | translate }}</th>
+                            <th scope="col">{{ 'name' | translate }}</th>
+                            <th scope="col">{{ 'price' | translate }}</th>
+                            <th scope="col">{{ 'quantity' | translate }}</th>
+                            <th scope="col">{{ 'subtotal' | translate }}</th>
+                            <th scope="col">{{ 'div_dis' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of order?.orderItems">
+                            <td class="product-image">
+                                <img [src]="item?.product?.thumbnail 
+                                        ? item?.product?.thumbnail 
+                                        : 'assets/images/product.png'" class="img-fluid" alt="product">
+                            </td>
+                            <td>
+                                <h6>{{ item?.product?.name }}
+                                </h6>
+                            </td>
+                            <td>
+                                <h6>{{ item?.product?.price | currencySymbol }}</h6>
+                            </td>
+                            <td>
+                                <h6>{{ item?.quantity }}</h6>
+                            </td>
+                            <td>
+                                <h6>{{ item?.sub_total | currencySymbol }}</h6>
+                            </td>
+
+                            <td>
+                                <h6>
+                                    <a href="javascript:void(0)" class="align-items-center fw-bold"
+                                        (click)="ViewDividendModal.openModal(item?.distributions)">
+                                        <i class="ri-eye-line me-1"></i>
+                                    </a>
+                                </h6>
+                                
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-page-wrapper>
+    </div>
+    <div class="col-xxl-3">
+        <div class="sticky-top-sec">
+            <app-page-wrapper [gridClass]="'col-sm-12'" [title]="'summary'">
+                <!-- <div button *ngIf="order?.id">
+                    <a href="{{order?.id}}" class="btn btn-animation btn-sm ms-auto" download="download">{{
+                        'invoice' | translate }} <i class="ri-download-2-fill"></i></a>
+                </div>  -->
+                <div class="tracking-total tracking-wrapper">
+                    <ul>
+                        <li>{{ 'subtotal' | translate }} <span>{{ (order?.subtotal ? order?.subtotal : 0) |
+                                currencySymbol
+                                }}</span></li>
+
+                        <li>{{ 'tax' | translate }} <span>{{ (order?.total_tax ? order?.total_tax : 0) | currencySymbol
+                                }}</span></li>
+
+                        <li>{{ 'commission' | translate }} <span>{{ (order?.total_commission ? order?.total_commission :
+                                0) |
+                                currencySymbol
+                                }}</span></li>
+
+                        <li>{{ 'total' | translate }} <span>{{ (order?.total ? order?.total : 0) | currencySymbol
+                                }}</span></li>
+                    </ul>
+                </div>
+            </app-page-wrapper>
+            <app-page-wrapper [gridClass]="'col-sm-12'" [title]="'consumer_details'">
+                <div class="customer-detail tracking-wrapper">
+                    <ul>
+                        <li>
+                            <label>{{ 'name' | translate }}:</label>
+                            <h4>{{ order?.consumer?.name }}</h4>
+                        </li>
+                        <li>
+                            <label>{{ 'email_address' | translate }}:</label>
+                            <h4>{{ order?.consumer?.email }}</h4>
+                        </li>
+                        <li>
+                            <label>{{ 'identity' | translate }}:</label>
+                            <h4>{{ order?.consumer?.identity }}</h4>
+                        </li>
+
+
+                        <li>
+                            <label>{{ 'payment_mode' | translate }}:</label>
+                            <h4>{{ order?.payment_method | uppercase }}</h4>
+                        </li>
+                    </ul>
+                </div>
+            </app-page-wrapper>
+        </div>
+    </div>
+</div>
+
+
+<app-view-dividend-modal #ViewDividendModal></app-view-dividend-modal>

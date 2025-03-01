@@ -1,0 +1,100 @@
+<!-- tiles section -->
+<section class="dashboard-tiles">
+    <div class="container-fluid">
+        <div class="row g-3">
+            <div class="col-xl-3 col-sm-6">
+                <div class="card-tiles">
+                    <div>
+                        <h6>{{ 'total_revenue' | translate }}</h6>
+                        <h3>{{ (statistics$ | async)?.total_revenue | currencySymbol }}</h3>
+                    </div>
+                    <div class="icon-box">
+                        <i class="ri-wallet-line"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+                <div class="card-tiles">
+                    <div>
+                        <h6>{{ 'total_orders' | translate }}</h6>
+                        <h3>{{ (statistics$ | async)?.total_orders }}</h3>
+                    </div>
+                    <div class="icon-box">
+                        <i class="ri-file-text-line"></i>
+                    </div>
+                </div>
+            </div>
+          <div class="col-xl-3 col-sm-6">
+                <div class="card-tiles">
+                    <div>
+                        <h6>{{ 'total_categories' | translate }}</h6>
+                        <h3>{{ (statistics$ | async)?.total_categories }}</h3>
+                    </div>
+                    <div class="icon-box">
+                        <i class="ri-box-3-line"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+                <div class="card-tiles">
+                    <div>
+                        <h6>{{ 'total_customers' | translate }}</h6>
+                        <h3>{{ (statistics$ | async)?.total_consumers }}</h3>
+                    </div>
+                    <div class="icon-box">
+                        <i class="ri-group-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</section>
+
+<!-- revenue & top vendor -->
+<section>
+    <!-- <div class="row m-0">
+        <div class="col-xl-12 col-md-12 p-0">
+            <app-page-wrapper [gridClass]="'col-sm-12'" [title]="'average_revenue'">
+                <div id="chart" *ngIf="isBrowser"></div>
+            </app-page-wrapper>
+        </div>
+   </div> -->
+    <div class="row m-0">
+        <div class="col-xl-12 col-md-12 p-0" *hasPermission="'order.index'">
+            <app-page-wrapper [gridClass]="'col-sm-12'" [title]="'recent_orders'">
+                <app-table [tableConfig]="orderTableConfig" (tableChanged)="onOrderTableChange($event)"
+                    (rowClicked)="orderView($event)" (action)="onOrderActionClicked($event)" [loading]="false"
+                    [pagination]="false" [topbar]="false" [hasCheckbox]="false">
+                </app-table>
+            </app-page-wrapper>
+        </div>
+    </div>
+    <div class="row m-0">
+        <div class="col-xl-12 col-md-12 p-0" *hasPermission="'product.index'">
+            <app-page-wrapper [gridClass]="'col-sm-12'" [title]="'product_stock_report'">
+                <div button>
+                    <select2 class="custom-select min-w-cls"
+                        [data]="(category$ | async)?.length ? (category$ | async) : []"
+                        [placeholder]="'select_category' | translate" (update)="filterProduct($event)" resettable
+                        *ngIf="isBrowser">
+                    </select2>
+                </div>
+
+                <!-- <div option>
+                    <select2 class="custom-select min-w-cls"
+                        [data]="reports"
+                        [placeholder]="'select_file' | translate" (update)="generateReport($event)" resettable
+                        *ngIf="isBrowser">
+                    </select2>
+                </div> -->
+
+
+                <app-table [tableConfig]="productStockTableConfig" [pagination]="true" [topbar]="false"
+                    [hasCheckbox]="false" [loading]="productStockLoader" (tableChanged)="onProductTableChange($event)"
+                    (rowClicked)="productEdit($event)" (action)="onProductActionClicked($event)">
+                </app-table>
+            </app-page-wrapper>
+        </div>
+    </div>
+</section>

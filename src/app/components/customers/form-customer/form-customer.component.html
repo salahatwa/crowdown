@@ -1,0 +1,48 @@
+<form [formGroup]="form" class="theme-form theme-form-2 mega-form" (ngSubmit)="submit()" autocomplete="off">
+
+    <div *ngIf="type == 'edit'&&currentCustomer&&currentCustomer.type=='channel'"
+        class="alert alert-warning form-label-title col-12 mb-3" role="alert">
+        You couldn't update customer registered from external channel 
+    </div>
+
+    <fieldset [disabled]="type == 'edit'&&currentCustomer&&currentCustomer.type=='channel'">
+        <app-form-fields [label]="'name' | translate" [for]="'name'" [required]="true">
+            <input class="form-control" id="name" type="text" placeholder="{{ 'enter_name' | translate }}"
+                formControlName="name">
+            <div class="invalid-feedback"
+                *ngIf="form?.controls['name']?.touched && form.controls['name']?.errors?.['required']">
+                {{ 'name_is_required' | translate }}
+            </div>
+
+            <div class="invalid-feedback"
+            *ngIf="form.controls['name'].touched && form.controls['name'].errors?.['pattern']">
+            {{ 'pattern_is_invalid' | translate }}
+        </div>
+        </app-form-fields>
+
+        <app-form-fields [label]="'identity' | translate" [for]="'identity'" [required]="true">
+            <input class="form-control" id="identity" type="text" placeholder="{{ 'enter_identity' | translate }}"
+                formControlName="identity">
+            <div class="invalid-feedback"
+                *ngIf="form?.controls['identity']?.touched && form.controls['identity']?.errors?.['required']">
+                {{ 'identity_is_required' | translate }}
+            </div>
+        </app-form-fields>
+
+        <app-form-fields [label]="'email'" [for]="'email'" [required]="true">
+            <input class="form-control" id="email" type="email" placeholder="{{ 'enter_email' | translate }}"
+                formControlName="email">
+            <div class="invalid-feedback"
+                *ngIf="form?.controls['email']?.touched && form.controls['email']?.errors?.['required']">
+                {{ 'email_is_required' | translate }}
+            </div>
+            <div class="invalid-feedback"
+                *ngIf="form?.controls['email']?.touched && form.controls['email']?.errors?.['email']">
+                {{ 'invalid_email' | translate }}
+            </div>
+        </app-form-fields>
+
+        <app-button [id]="'add_customer'">{{ (type == 'create' ?
+            'add_customer' : 'update_customer') | translate }}</app-button>
+    </fieldset>
+</form>

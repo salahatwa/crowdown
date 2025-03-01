@@ -1,0 +1,35 @@
+  name: build and deploy crowdfund-admin
+  on:
+    push:
+      branches:
+        - main
+
+  jobs:
+    build-deploy:
+      name: build and deploy spring-api
+      runs-on: ubuntu-latest
+      steps:
+        - name: checkout code
+          uses: actions/checkout@v3
+
+        - name: build the docker image
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            dockerfile: Dockerfile
+            push: false
+            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/crowdown-panel:latest
+
+        - name: login to docker hub
+          uses: docker/login-action@v1
+          with:
+            username: ${{ secrets.DOCKER_HUB_USERNAME }}
+            password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+        - name: push the docker image to docker hub
+          uses: docker/build-push-action@v4
+          with:
+            context: .
+            dockerfile: Dockerfile
+            push: true
+            tags: ${{ secrets.DOCKER_HUB_USERNAME }}/crowdown-panel:latest

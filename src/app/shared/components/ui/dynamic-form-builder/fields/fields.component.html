@@ -1,0 +1,15 @@
+<div class="form-group row">
+    <label *ngIf="field?.type!=='form-array' && field?.type!=='form-group'" class="form-label" [ngClass]="'col-form-label'+ (size && '-'+size)"
+        [attr.for]="field?.label">
+        {{field?.label}}
+        <strong class="text-danger" *ngIf="required">*</strong>
+    </label>
+    <div>
+        <lib-form-array *ngIf="field?.type=='form-array'" [field]="field" [form]="form"></lib-form-array>
+        <lib-nested-form-group *ngIf="field?.type=='form-group' && field?.formGroup" [control]="control" [field]="field" [form]="form"></lib-nested-form-group>
+        <ng-container *ngIf="field?.type!='form-array' && field?.type!='form-group'">
+            <lib-basic-field [field]="field" [form]="form"></lib-basic-field>
+            <lib-validation-error [control]="control" [field]="field"></lib-validation-error>
+        </ng-container>
+    </div>
+</div>

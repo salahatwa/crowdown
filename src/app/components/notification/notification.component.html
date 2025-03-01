@@ -1,0 +1,21 @@
+<app-page-wrapper [gridClass]="'col-xxl-8 m-auto'" [title]="'notifications'">
+    <div button>
+        <a (click)="clearReaded()" class="align-items-center btn btn-animation d-flex">
+            <i class="ri-delete-bin-line"></i> {{ 'remove' | translate }}
+        </a>
+    </div>
+
+    <ul class="notification-setting" *ngIf="(notification$ | async)?.length">
+        <li [class.unread]="!notification.read_at" *ngFor="let notification of (notification$ | async)">
+            <h4>{{ notification?.content }}</h4>
+            <h5><i class="ri-time-line"></i> {{ notification?.createTime | date: 'dd MMM yyyy hh:mm:a' }}</h5>
+        </li>
+    </ul>
+    <ul class="notification-setting">
+        <li>
+            <app-no-data [class]="'empty-cart'" [image]="'assets/svg/empty-cart.svg'" [text]="'No Notifications found'"
+                *ngIf="!(notification$ | async)?.length">
+            </app-no-data>
+        </li>
+    </ul>
+</app-page-wrapper>

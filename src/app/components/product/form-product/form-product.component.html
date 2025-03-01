@@ -1,0 +1,839 @@
+<form class="theme-form theme-form-2 mega-form" [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+    <div class="vertical-tabs">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4">
+                <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+                    <li ngbNavItem="general" id="general" [class.is-invalid]="tabError == 'general'">
+                        <a ngbNavLink><i class="ri-settings-line"></i>{{ 'general' | translate }}</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab" tab="general">
+
+                                <div *ngIf="preventUpdate" class="alert alert-warning form-label-title col-12 mb-3"
+                                    role="alert">
+                                    <h5>Some Product details cannot be updated cause it is
+                                        Active/out_stock/Expired/Subscription dates.</h5>
+                                </div>
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'name'" [for]="'name'" [required]="true">
+                                    <input class="form-control" id="name" type="text"
+                                        placeholder="{{ 'enter_product_name' | translate }}" formControlName="name">
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['name'].touched && form.controls['name'].errors?.['required']">
+                                        {{ 'name_is_required' | translate }}
+                                    </div>
+
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['name'].touched && form.controls['name'].errors?.['pattern']">
+                                        {{ 'pattern_is_invalid' | translate }}
+                                    </div>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'short_description'" [for]="'short_description'"
+                                    [required]="true">
+                                    <textarea class="form-control" id="sort_description"
+                                        placeholder="{{ 'enter_short_description' | translate }}" rows="3"
+                                        formControlName="short_description"></textarea>
+                                    <p class="help-text">{{ '*Maximum length should be 300 characters.' }}</p>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['short_description'].touched && form.controls['short_description'].errors?.['required']">
+                                        {{ 'short_description_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'description'" [for]="'description'"
+                                    [required]="true">
+                                    <ckeditor [editor]="editor" [config]="config" formControlName="description"
+                                        [id]="'description'"></ckeditor>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['description'].touched && form.controls['description'].errors?.['required']">
+                                        {{ 'description_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+                            </div>
+                        </ng-template>
+                    </li>
+
+                    <li ngbNavItem="general2" id="general2" [class.is-invalid]="tabError == 'general2'">
+                        <a ngbNavLink><i class="ri-settings-line"></i>{{ 'general_other_lang' | translate }}</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab" tab="general2">
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'name'" [for]="'name'" [required]="true">
+                                    <input class="form-control" id="name_tr" type="text"
+                                        placeholder="{{ 'enter_product_name' | translate }}" formControlName="name_tr">
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['name_tr'].touched && form.controls['name_tr'].errors?.['required']">
+                                        {{ 'name_is_required' | translate }}
+                                    </div>
+
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['name_tr'].touched && form.controls['name_tr'].errors?.['pattern']">
+                                        {{ 'pattern_is_invalid' | translate }}
+                                    </div>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'short_description'" [for]="'short_description'"
+                                    [required]="true">
+                                    <textarea class="form-control" id="short_description_tr"
+                                        placeholder="{{ 'enter_short_description' | translate }}" rows="3"
+                                        formControlName="short_description_tr"></textarea>
+                                    <p class="help-text">{{ '*Maximum length should be 300 characters.' }}</p>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['short_description_tr'].touched && form.controls['short_description_tr'].errors?.['required']">
+                                        {{ 'short_description_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'description'" [for]="'description'"
+                                    [required]="true">
+                                    <ckeditor [editor]="editor" [config]="config" formControlName="description_tr"
+                                        [id]="'description_tr'"></ckeditor>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['description_tr'].touched && form.controls['description_tr'].errors?.['required']">
+                                        {{ 'description_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+                            </div>
+                        </ng-template>
+                    </li>
+
+                    <li ngbNavItem="inventory" id="inventory" [class.is-invalid]="tabError == 'inventory'">
+                        <a ngbNavLink><i class="ri-file-list-line"></i>{{ 'inventory' | translate }}</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab" tab="inventory">
+                                <!--
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'unit'" [for]="'unit'" [required]="false">
+                                    <input class="form-control" id="unit" type="text"
+                                        placeholder="{{ 'enter_unit' | translate }}" formControlName="unit">
+                                    <p class="help-text">{{ '*Specify the measurement unit, such as 10 Pieces, 1 KG, 1
+                                        Ltr, etc.' }}</p>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'weight'" [for]="'weight'" [required]="false">
+                                    <input class="form-control" id="weight" type="number"
+                                        placeholder="Enter weight Gms (e.g 100)" formControlName="weight">
+                                    <p class="help-text">{{ '*Specify the weight of this product in Gms.' }}</p>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'" [gridClass]="'col-sm-9'" [label]="'stock_status'" [for]="'stock_status'" [required]="true">
+                                    <select2 
+                                        class="custom-select" 
+                                        [placeholder]="'select_stock_status' | translate"
+                                        [data]="stocks?.length ? stocks : []" 
+                                        noResultMessage="{{ 'no_data_found' | translate }}"
+                                        formControlName="stock_status">
+                                    </select2>
+                                    <div class="invalid-feedback" *ngIf="form?.controls['stock_status']?.touched && form?.controls['stock_status']?.errors?.['required']">
+                                        {{ 'stock_is_required' | translate }}
+                                    </div>
+                                </app-form-fields> -->
+                                <!-- <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'sku'" [for]="'sku'" [required]="false">
+                                    <input class="form-control" id="sku" type="text"
+                                        placeholder="{{ 'enter_sku' | translate }}" formControlName="sku"
+                                        [class.disabled]="preventUpdate" [readonly]="preventUpdate">
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['sku'].touched && form.controls['sku'].errors?.['required']">
+                                        {{ 'sku_is_required' | translate}}
+                                    </div>
+
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['sku'].touched && form.controls['sku'].errors?.['notAllowed']">
+                                        {{ 'sku_is_required' | translate}}
+                                    </div>
+                                </app-form-fields> -->
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'stock_quantity'" [for]="'quantity'"
+                                    [required]="true">
+                                    <input class="form-control" id="quantity" type="number"
+                                        placeholder="{{ 'enter_quantity' | translate }}" formControlName="quantity"
+                                        [class.disabled]="preventUpdate" [readonly]="preventUpdate">
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['quantity'].touched && form.controls['quantity'].errors?.['required']">
+                                        {{ 'quantity_is_required' | translate }}
+                                    </div>
+
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['quantity'].touched && form.controls['quantity'].errors?.['notAllowed']">
+                                        {{ 'quantity_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'price'" [for]="'price'" [required]="true">
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            {{(setting$ | async)?.general?.default_currency.symbol ? (setting$ |
+                                            async)?.general?.default_currency.symbol : '$'}}
+                                        </span>
+                                        <input class="form-control" id="price" type="number"
+                                            placeholder="{{ 'enter_price' | translate }}" formControlName="price"
+                                            [class.disabled]="preventUpdate" [readonly]="preventUpdate">
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['price'].touched && form.controls['price'].errors?.['required']">
+                                        {{ 'price_is_required' | translate }}
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['price'].touched && form.controls['price'].errors?.['invalidPrice']">
+                                        {{ 'please_enter_a_valid_price' | translate }}
+                                    </div>
+
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['price'].touched && form.controls['price'].errors?.['notAllowed']">
+                                        {{ 'please_enter_a_valid_price' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'commission'" [for]="'commission_value'"
+                                    [required]="false">
+                                    <div class="input-group">
+                                        <input class="form-control" id="commission_value" type="number" min="0"
+                                            max="100" oninput="if (value > 100) value = 100; if (value < 0) value = 0;"
+                                            placeholder="{{ 'enter_commission' | translate }}"
+                                            formControlName="commission" [class.disabled]="preventUpdate"
+                                            [readonly]="preventUpdate">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+
+                                    <p class="help-text">{{ 'commission_rate' | translate }} - {{
+                                        ((form.get('price')?.value * form.get('commission')?.value)/100).toFixed(2)}}
+                                        {{(setting$ | async)?.general?.default_currency.symbol ? (setting$ |
+                                        async)?.general?.default_currency.symbol : '$'}}</p>
+                                </app-form-fields>
+                                <!-- <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                            [gridClass]="'col-sm-9'" [label]="'commission_rate'" [for]="'commission_rate'"
+                            [required]="false">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    {{(setting$ | async)?.general?.default_currency.symbol ? (setting$ |
+                                    async)?.general?.default_currency.symbol : '$'}}
+                                </span>
+                                <input class="form-control disabled" id="commission_rate" type="number"
+                                    placeholder="{{ 'commission_rate' | translate }}"
+                                    value="{{ ((form.get('price')?.value * form.get('commission')?.value)/100).toFixed(2)}}"
+                                    readonly>
+                            </div>
+                        </app-form-fields> -->
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'min_sale_units'" [for]="'min_sale_units'"
+                                    [required]="true">
+                                    <input class="form-control" id="min_sale_units" type="number"
+                                        placeholder="{{ 'min_sale_units' | translate }}"
+                                        formControlName="min_sale_units" [class.disabled]="preventUpdate"
+                                        [readonly]="preventUpdate">
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['min_sale_units'].touched && form.controls['min_sale_units'].errors?.['required']">
+                                        {{ 'min_sale_units_is_required' | translate }}
+                                    </div>
+
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['min_sale_units'].touched && form.controls['min_sale_units'].errors?.['notAllowed']">
+                                        {{ 'min_sale_units_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'max_sale_units'" [for]="'max_sale_units'"
+                                    [required]="true">
+                                    <input class="form-control" id="max_sale_units" type="number"
+                                        placeholder="{{ 'max_sale_units' | translate }}"
+                                        formControlName="max_sale_units" [class.disabled]="preventUpdate"
+                                        [readonly]="preventUpdate">
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['max_sale_units'].touched && form.controls['max_sale_units'].errors?.['required']">
+                                        {{ 'max_sale_units_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+
+
+
+
+
+                            </div>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem="setup" id="setup" [class.is-invalid]="tabError == 'setup'">
+                        <a ngbNavLink><i class="ri-tools-line"></i>{{ 'setup' | translate }}</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab" tab="setup">
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'tags'" [for]="'tags'" [required]="false">
+                                    <app-advanced-dropdown [position]="'bottom'" [selectedOption]="selectedTags"
+                                        [options]="(tag$ | async )?.data?.content?.length ? (tag$ | async )?.data?.content : []"
+                                        (selectedItem)="selectTagItem($event)">
+                                    </app-advanced-dropdown>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'categories'" [for]="'categories'"
+                                    [required]="true">
+                                    <app-advanced-dropdown [position]="'bottom'" [selectedOption]="selectedCategories"
+                                        [options]="(category$ | async)?.data?.length ? (category$ | async )?.data : []"
+                                        [subArrayKey]="'children'" [id]="'categories'"
+                                        (selectedItem)="selectCategoryItem($event)" [class.disabled]="preventUpdate"
+                                        [readonly]="preventUpdate">
+                                    </app-advanced-dropdown>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['categories'].touched && form.controls['categories'].errors?.['required']">
+                                        {{ 'categories_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'tax'" [for]="'tax'" [required]="true">
+                                    <select2 class="custom-select" [placeholder]="'select_tax' | translate "
+                                        [data]="(tax$ | async).length ? (tax$ | async) : []" formControlName="tax_id"
+                                        [id]="'tax_id'" noResultMessage="{{ 'no_data_found' | translate }}" resettable
+                                        [class.disabled]="preventUpdate" [overlay]="preventUpdate">
+                                    </select2>
+                                    <div class="invalid-feedback"
+                                        *ngIf="form.controls['tax_id'].touched && form.controls['tax_id'].errors?.['required']">
+                                        {{ 'tax_is_required' | translate }}
+                                    </div>
+                                </app-form-fields>
+
+                                <!-- <div class="variant-box border-top">
+
+                                    <app-button [class]="'btn btn-animation mb-4'" [id]="'add_attribute'" [spinner]="false"
+                                        (click)="addAttribute($event)">
+                                        {{ 'add_attribute' | translate }}
+                                    </app-button>
+
+
+                                    <div class="shipping-accordion variant-accordion"
+                                        *ngIf="attributesControl.controls?.length">
+                                        <h3 class="form-label-title mb-2">{{ 'Attribute' | translate }}</h3>
+                                        <ng-container formArrayName='attributes'>
+                                            <div ngbAccordion>
+                                                <div ngbAccordionItem [collapsed]="false"
+                                                    *ngFor="let meta of attributesControl.controls; let index = index"
+                                                    formGroupName='{{ index }}'>
+
+                                                    <div ngbAccordionHeader>
+                                                        <button ngbAccordionButton>
+                                                            <div class="col-sm-2 delete-variant">
+                                                                <a href="javascript:void(0)" class="invalid-feedback"
+                                                                    (click)="removeAttribute(index)">
+                                                                    {{ 'remove' | translate }}
+                                                                </a>
+                                                            </div>
+                                                        </button>
+                                                    </div>
+
+                                                    <div ngbAccordionCollapse>
+                                                        <div ngbAccordionBody>
+                                                            <ng-template>
+                                                                <app-form-fields
+                                                                    [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                                                    [gridClass]="'col-sm-9'" [label]="'name'"
+                                                                    [for]="'name'+index" [required]="true">
+                                                                    <input class="form-control" id="title" type="text"
+                                                                        placeholder="{{ 'name' | translate }}"
+                                                                        formControlName="key">
+                                                                </app-form-fields>
+
+
+                                                                <app-form-fields
+                                                                    [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                                                    [gridClass]="'col-sm-9'" [label]="'value'"
+                                                                    [for]="'value'+index" [required]="true">
+                                                                    <input class="form-control" id="title" type="text"
+                                                                        placeholder="{{ 'value' | translate }}"
+                                                                        formControlName="value">
+                                                                </app-form-fields>
+
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+
+                                    </div>
+
+                                </div> -->
+
+                                <div class="variant-box border-top">
+
+                                    <app-button [class]="'btn btn-animation mb-4'" [id]="'add_file'" [spinner]="false"
+                                        (click)="addFile($event)">
+                                        {{ 'add_file' | translate }}
+                                    </app-button>
+
+
+                                    <div class="shipping-accordion variant-accordion"
+                                        *ngIf="filesControl.controls?.length">
+                                        <h3 class="form-label-title mb-2">{{ 'Files' | translate }}</h3>
+                                        <ng-container formArrayName='files'>
+                                            <div ngbAccordion>
+                                                <div ngbAccordionItem [collapsed]="false"
+                                                    *ngFor="let meta of filesControl.controls; let index = index"
+                                                    formGroupName='{{ index }}'>
+
+                                                    <div ngbAccordionHeader>
+                                                        <button ngbAccordionButton>
+                                                            <div class="col-sm-2 delete-variant">
+                                                                <a href="javascript:void(0)" class="invalid-feedback"
+                                                                    (click)="removeFile(index)">
+                                                                    {{ 'remove' | translate }}
+                                                                </a>
+                                                            </div>
+                                                        </button>
+                                                    </div>
+
+                                                    <div ngbAccordionCollapse>
+                                                        <div ngbAccordionBody>
+                                                            <ng-template>
+                                                                <app-form-fields
+                                                                    [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                                                    [gridClass]="'col-sm-9'" [label]="'name'"
+                                                                    [for]="'name'+index" [required]="true">
+                                                                    <input class="form-control" id="title" type="text"
+                                                                        placeholder="{{ 'name' | translate }}"
+                                                                        formControlName="key">
+                                                                </app-form-fields>
+
+
+                                                                <!-- [helpText]="'*Upload Attachment size 2 MB recommended'" -->
+                                                                <app-form-fields
+                                                                    [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                                                    [gridClass]="'col-sm-9'" [label]="'file'"
+                                                                    [for]="'file'+index" [required]="true">
+                                                                    <app-file-upload [multipleImage]="false"
+                                                                        [mediaType]="FILE_TYPE.join(',')"
+                                                                        [imageUrl]="meta.get('value').value"
+                                                                        [width]="'half-width'"
+                                                                        (selectedFiles)="selectAttachment(index,$event)">
+                                                                    </app-file-upload>
+                                                                </app-form-fields>
+
+
+                                                            </ng-template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                        </ng-template>
+                    </li>
+                    <li ngbNavItem="images" id="images" [class.is-invalid]="tabError == 'images'">
+                        <a ngbNavLink><i class="ri-image-line"></i>{{ 'images' | translate }}</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab" tab="images">
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'video'" [for]="'video'" [required]="false">
+                                    <app-file-upload [multipleImage]="false" [mediaType]="VIDEO_TYPE.join(',')"
+                                        [imageUrl]="(product$ | async)?.video"
+                                        [helpText]="'*Upload video size 2 MB recommended'"
+                                        (selectedFiles)="selectVideo($event)">
+                                    </app-file-upload>
+                                </app-form-fields>
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'thumbnail'" [for]="'thumbnail'"
+                                    [required]="false">
+                                    <app-file-upload [multipleImage]="false" [mediaType]="IMAGE_TYPE.join(',')"
+                                        [imageUrl]="(product$ | async)?.thumbnail"
+                                        [helpText]="'*Upload logo size 600x600px recommended'"
+                                        (selectedFiles)="selectThumbnail($event)">
+                                    </app-file-upload>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'images'" [for]="'galleries'" [required]="false">
+                                    <app-file-upload [multipleImage]="true" [images]="(product$ | async)?.galleries"
+                                        [mediaType]="IMAGE_TYPE.join(',')"
+                                        [helpText]="'*Upload image size 600x600px recommended'"
+                                        (selectedFiles)="selectImages($event)">
+                                    </app-file-upload>
+                                </app-form-fields>
+
+                            </div>
+                        </ng-template>
+                    </li>
+
+                    <!--
+                    <li ngbNavItem="seo" id="seo" [class.is-invalid]="tabError == 'seo'">
+                        <a ngbNavLink><i class="ri-earth-line"></i>{{ 'seo' | translate }}</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab" tab="seo">
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'meta_title'" [for]="'meta_title'"
+                                    [required]="false">
+                                    <input class="form-control" id="meta_title" type="text"
+                                        placeholder="{{'enter_meta_title' | translate }}" formControlName="meta_title">
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'meta_description'" [for]="'meta_desc'"
+                                    [required]="false">
+                                    <textarea class="form-control" id="meta_desc"
+                                        placeholder="{{ 'enter_meta_description' | translate }}" rows="3"
+                                        formControlName="meta_description"></textarea>
+                                </app-form-fields>
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'meta_image'" [for]="'meta_image'"
+                                    [required]="false">
+                                    <app-file-upload [multipleImage]="false"
+                                        [image]="(product$ | async)?.product_meta_image"
+                                        (selectedFiles)="selectMetaImage($event)">
+                                    </app-file-upload>
+                                </app-form-fields>
+                            </div>
+                        </ng-template>
+                    </li>
+             -->
+
+                    <li ngbNavItem="status" id="status" [class.is-invalid]="tabError == 'status'">
+                        <a ngbNavLink><i class="ri-checkbox-circle-line"></i>{{ 'status' | translate }}</a>
+                        <ng-template ngbNavContent>
+                            <div class="tab" tab="status">
+                                <!--
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'social_share'" [for]="'social_share'"
+                                    [required]="false">
+                                    <div class="form-check form-switch ps-0">
+                                        <label class="switch">
+                                            <input type="checkbox" id="social_share" formControlName="social_share">
+                                            <span class="switch-state"></span>
+                                        </label>
+                                        <p class="help-text">{{ '*Enable this option to allow users to share the product
+                                            on social media platforms.' }}</p>
+                                    </div>
+                                </app-form-fields>
+                            -->
+
+
+
+                                <!-- <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'trending'" [for]="'is_trending'"
+                                    [required]="false">
+                                    <div class="form-check form-switch ps-0">
+                                        <label class="switch">
+                                            <input type="checkbox" id="is_trending" formControlName="is_trending">
+                                            <span class="switch-state"></span>
+                                        </label>
+                                        <p class="help-text">{{ '*Enabling this will showcase the product in the sidebar
+                                            of the product page as a trending item.' }}</p>
+                                    </div>
+                                </app-form-fields> -->
+
+                                <!--
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'return'" [for]="'return'" [required]="false">
+                                    <div class="form-check form-switch ps-0">
+                                        <label class="switch">
+                                            <input type="checkbox" id="return" formControlName="is_return">
+                                            <span class="switch-state"></span>
+                                        </label>
+                                        <p class="help-text">{{ '*Enable to make the product eligible for returns.' }}
+                                        </p>
+                                    </div>
+                                </app-form-fields>
+                            -->
+
+                                <!-- <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'status'" [for]="'status'" [required]="false">
+                                    <div class="form-check form-switch ps-0">
+                                        <label class="switch">
+                                            <input type="checkbox" id="status" formControlName="status">
+                                            <span class="switch-state"></span>
+                                        </label>
+                                        <p class="help-text">{{ '*Toggle between Enabled and Disabled to control the availability of the product for purchase.' }}</p>
+
+                                    </div>
+                                </app-form-fields> -->
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'sub_date'" [for]="'is_subscription_allowed'"
+                                    [required]="false">
+
+                                    <fieldset [disabled]="preventUpdate">
+                                        <div class="form-check form-switch ps-0" [class.disabled]="preventUpdate">
+                                            <label class="switch">
+                                                <input type="checkbox" id="is_subscription_allowed"
+                                                    formControlName="is_subscription_allowed">
+                                                <span class="switch-state"></span>
+                                            </label>
+                                            <p class="help-text">{{ '*Toggle between Enabled and Disabled to control the
+                                                Subscription dates of the product.' }}</p>
+                                        </div>
+                                    </fieldset>
+
+                                </app-form-fields>
+
+                                <div *ngIf="form.get('is_subscription_allowed')?.value">
+
+
+                                    <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                        [gridClass]="'col-sm-9'" [label]="'sub_st_dt'" [for]="'subscriptionStartDate'"
+                                        [required]="true">
+                                        <div class="dp-hidden position-absolute custom-dp-dropdown">
+                                            <div class="input-group">
+                                                <input name="datepicker" class="form-control" ngbDatepicker
+                                                    #datepicker="ngbDatepicker" [autoClose]="'outside'"
+                                                    (dateSelect)="onSubscriptionDateSelection($event)"
+                                                    [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden"
+                                                    [startDate]="subFromDate!" tabindex="-1" [minDate]="minDate"
+                                                    readonly />
+                                                <ng-template #t let-date let-focused="focused">
+                                                    <app-date-template [focused]="focused" [date]="date"
+                                                        [fromDate]="subFromDate"
+                                                        [toDate]="subToDate"></app-date-template>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                        <div class="input-group custom-dt-picker">
+                                            <input #sbFromDate class="form-control" placeholder="yyyy-mm-dd"
+                                                name="sbFromDate" [value]="formatter.format(subFromDate)"
+                                                (input)="subFromDate = validateInput(subFromDate, sbFromDate.value)"
+                                                readonly formControlName="subscriptionStartDate" />
+                                            <button class="btn btn-outline-secondary"
+                                                (click)="!preventUpdate?datepicker.toggle():false" type="button">
+                                                <i class="ri-calendar-line"></i>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="form?.controls['subscriptionStartDate']?.touched && form?.controls['subscriptionStartDate']?.errors?.['required']">
+                                            {{ 'start_date_is_required' | translate }}
+                                        </div>
+                                    </app-form-fields>
+                                    <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                        [gridClass]="'col-sm-9'" [label]="'sub_ed_dt'" [for]="'subscriptionEndDate'"
+                                        [required]="true">
+                                        <div class="input-group custom-dt-picker">
+                                            <input #subscriptionEndDt class="form-control" placeholder="yyyy-mm-dd"
+                                                name="subscriptionEndDt" [value]="formatter.format(subToDate)"
+                                                formControlName="subscriptionEndDate"
+                                                (input)="subToDate = validateInput(subToDate, subscriptionEndDt.value)"
+                                                readonly />
+                                            <button class="btn btn-outline-secondary"
+                                                (click)="!preventUpdate?datepicker.toggle():false" type="button">
+                                                <i class="ri-calendar-line"></i>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="form?.controls['subscriptionEndDate']?.touched && form?.controls['subscriptionEndDate']?.errors?.['required']">
+                                            {{ 'end_date_is_required' | translate }}
+                                        </div>
+                                    </app-form-fields>
+
+                                </div>
+
+
+                                <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                    [gridClass]="'col-sm-9'" [label]="'sale_status'" [for]="'is_periodic_sale_enable'"
+                                    [required]="false">
+                                    <fieldset [disabled]="preventUpdate">
+                                        <div class="form-check form-switch ps-0" [class.disabled]="preventUpdate">
+                                            <label class="switch">
+                                                <input type="checkbox" id="is_periodic_sale_enable"
+                                                    formControlName="is_periodic_sale_enable">
+                                                <span class="switch-state"></span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+                                </app-form-fields>
+
+                                <div *ngIf="form.get('is_periodic_sale_enable')?.value">
+                                    <!-- <app-form-fields *ngIf="preventUpdate"
+                                        [labelClass]="'form-label-title col-sm-3 mb-0'" [gridClass]="'col-sm-9'"
+                                        [label]="'featured'" [for]="'product_featured'" [required]="false">
+                                        <fieldset [disabled]="true">
+                                            <div class="form-check form-switch ps-0" [class.disabled]="preventUpdate">
+                                                <label class="switch">
+                                                    <input type="checkbox" id="product_featured"
+                                                        formControlName="is_featured">
+                                                    <span class="switch-state"></span>
+                                                </label>
+                                                <p class="help-text">{{ '*this option mean product coming soon' }}</p>
+                                            </div>
+                                        </fieldset>
+                                    </app-form-fields> -->
+
+                                    <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                        [gridClass]="'col-sm-9'" [label]="'inv_st_dt'" [for]="'sale_starts_at'"
+                                        [required]="true">
+                                        <div class="dp-hidden position-absolute custom-dp-dropdown">
+                                            <div class="input-group">
+                                                <input name="datepicker2" class="form-control" ngbDatepicker
+                                                    #datepicker2="ngbDatepicker" [autoClose]="'outside'"
+                                                    (dateSelect)="onInvestDateSelection($event)" [displayMonths]="2"
+                                                    [dayTemplate]="s" outsideDays="hidden" [startDate]="fromDate!"
+                                                    tabindex="-1" [minDate]="minDate" readonly />
+                                                <ng-template #s let-date let-focused="focused">
+                                                    <app-date-template [focused]="focused" [date]="date"
+                                                        [fromDate]="fromDate" [toDate]="toDate"></app-date-template>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                        <div class="input-group custom-dt-picker">
+                                            <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd"
+                                                name="dpFromDate" [value]="formatter.format(fromDate)"
+                                                (input)="fromDate = validateInput(fromDate, dpFromDate.value)" readonly
+                                                formControlName="sale_starts_at" />
+                                            <button class="btn btn-outline-secondary"
+                                                (click)="!preventUpdate?datepicker2.toggle():false" type="button">
+                                                <i class="ri-calendar-line"></i>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="form?.controls['sale_starts_at']?.touched && form?.controls['sale_starts_at']?.errors?.['required']">
+                                            {{ 'start_date_is_required' | translate }}
+                                        </div>
+                                    </app-form-fields>
+                                    <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                        [gridClass]="'col-sm-9'" [label]="'inv_ed_dt'" [for]="'sale_expired_at'"
+                                        [required]="true">
+                                        <div class="input-group custom-dt-picker">
+                                            <input #dpToDate class="form-control" placeholder="yyyy-mm-dd"
+                                                name="dpToDate" [value]="formatter.format(toDate)"
+                                                formControlName="sale_expired_at"
+                                                (input)="toDate = validateInput(toDate, dpToDate.value)" readonly />
+                                            <button class="btn btn-outline-secondary"
+                                                (click)="!preventUpdate?datepicker2.toggle():false" type="button">
+                                                <i class="ri-calendar-line"></i>
+                                            </button>
+                                        </div>
+                                        <div class="invalid-feedback"
+                                            *ngIf="form?.controls['sale_expired_at']?.touched && form?.controls['sale_expired_at']?.errors?.['required']">
+                                            {{ 'end_date_is_required' | translate }}
+                                        </div>
+                                        <p class="help-text">{{ 'no_month' | translate }} - {{
+                                            monthDiffSt(form.get('sale_starts_at')?.value,form.get('sale_expired_at')?.value)}}
+                                        </p>
+                                    </app-form-fields>
+
+
+
+
+                                    <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                        [gridClass]="'col-sm-9'" [label]="'annual_return_rate'"
+                                        [for]="'annual_return_rate'" [required]="true">
+                                        <div class="input-group">
+                                            <input class="form-control" id="annual_return_rate" type="number" min="0"
+                                                max="100"
+                                                oninput="if (value > 100) value = 100; if (value < 0) value = 0;"
+                                                placeholder="{{ 'annual_return_rate' | translate }}"
+                                                formControlName="annual_return_rate" [class.disabled]="preventUpdate"
+                                                [readonly]="preventUpdate">
+
+
+                                            <span class="input-group-text">%</span>
+
+                                            <div class="invalid-feedback"
+                                                *ngIf="form.controls['annual_return_rate'].touched && form.controls['annual_return_rate'].errors?.['required']">
+                                                {{ 'required' | translate }}
+                                            </div>
+
+
+                                        </div>
+                                        <p class="help-text">{{ 'roi' | translate }} - {{ computeROI()}} %</p>
+                                    </app-form-fields>
+
+                                    <app-form-fields [labelClass]="'form-label-title col-sm-3 mb-0'"
+                                        [gridClass]="'col-sm-9'" [label]="'div_dis'" [for]="'div_dis'"
+                                        [required]="true">
+                                        <select2 class="custom-select" [placeholder]="'div_dis' | translate "
+                                            [data]="dividend_distribution.length ? dividend_distribution: []"
+                                            formControlName="dividend_distribution" [id]="'id'"
+                                            noResultMessage="{{ 'no_data_found' | translate }}" resettable
+                                            [class.disabled]="preventUpdate" [overlay]="preventUpdate">
+                                        </select2>
+                                        <div class="invalid-feedback"
+                                            *ngIf="form.controls['dividend_distribution'].touched && form.controls['dividend_distribution'].errors?.['required']">
+                                            {{ 'required' | translate }}
+                                        </div>
+                                        <p class="help-text"> {{ computeDividend()}}</p>
+                                    </app-form-fields>
+
+                                    <!-- <app-form-fields  [labelClass]="'form-label-title col-sm-3 mb-0'"
+                        [gridClass]="'col-sm-9'" [label]="'div_dis'" [for]="'div_dis'"
+                        [required]="false">
+                        <div class="row g-3" *ngIf="type=='create'">
+                        <ng-container *ngFor="let item of dividend_distribution; let i = index;">
+                            <div class="col-xxl-6 col-lg-12 col-md-6">
+                                <label for="dividend-{{i}}">
+                                    <div class="delivery-address-box">
+                                        <div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="{{item?.value}}" 
+                                                    name="dividend-{{type}}" id="dividend-{{type}}-{{i}}" (change)="set($event)">
+                                                    <h5 class="fw-semibold">{{ item?.label }}</h5>     
+                                            </div>
+                                            <ul class="delivery-address-detail">
+                                            
+                                                <li>
+                                                    <p class="text-content">
+                                                        <span class="text-title">  {{(setting$ | async)?.general?.default_currency.symbol ? (setting$ |
+                                                            async)?.general?.default_currency.symbol : '$'}}: </span>
+                                                        {{computeDividend(item?.value)}}
+                                                    </p>
+                                                </li>
+                                              
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </ng-container>
+                       </div>
+
+                       <div class="row g-3" *ngIf="type=='edit'">
+
+                       
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                {{form.get('dividend_distribution').value}}
+                            </span>
+                            <input class="form-control disabled" id="roi" type="number"
+                                placeholder="{{ 'roi' | translate }}"
+                                value="{{ computeDividend(form.get('dividend_distribution').value) }}"
+                                readonly>
+                        </div>
+
+                       </div>
+
+                       </app-form-fields> -->
+
+                                    <app-form-fields [label]="'invest_memorandum' | translate "
+                                        [for]="'invest_memorandum'" [required]="false">
+                                        <app-file-upload [multipleImage]="false" [mediaType]="FILE_TYPE.join(',')"
+                                            [imageUrl]="product?.invest_memorandum"
+                                            (selectedFiles)="selectMemorandum($event)">
+                                        </app-file-upload>
+                                    </app-form-fields>
+
+                                </div>
+
+
+
+                            </div>
+                        </ng-template>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xl-7 col-lg-8">
+                <div [ngbNavOutlet]="nav"></div>
+            </div>
+        </div>
+        <app-button [id]="'product_btn'" [disabled]="product?.stock_status == 'out_stock'">
+            {{ (type == 'create' ? 'save_product' : 'update_product') | translate }}
+        </app-button>
+    </div>
+</form>

@@ -1,0 +1,5 @@
+<span class="custom-day" [class.focused]="focused" [class.range]="isRange(date,fromDate,toDate)"
+    [class.faded]="isHovered(date,fromDate,toDate) || isInside(date,fromDate,toDate)" (mouseenter)="hoveredDate = date"
+    (mouseleave)="hoveredDate = null">
+    {{ date?.day }}
+</span>

@@ -1,0 +1,93 @@
+<form class="theme-form theme-form-2 mega-form" [formGroup]="formGroup" autocomplete="off">
+    <ul>
+        <li>
+
+            <div class="checkout-detail" [formGroupName]="formGroupNameDt">
+                <div class="row g-sm-4 g-3">
+                    <div class="col-xxl-6">
+                        <div class="delivery-option">
+                            <div class="delivery-category">
+                                <div class="shipment-detail w-100">
+                                    <div class="form-check custom-form-check hide-check-box">
+                                        <input class="form-check-input" type="radio" name="colorType" id="color"
+                                            (change)="setSelectedVal('color')">
+                                        <label class="form-check-label" for="color">
+                                            Color
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-6">
+                        <div class="delivery-option">
+                            <div class="delivery-category">
+                                <div class="shipment-detail w-100">
+                                    <div class="form-check mb-0 custom-form-check show-box-checked">
+                                        <input class="form-check-input" type="radio" name="colorType" id="gradiant"
+                                            (change)="setSelectedVal('gradiant')">
+                                        <label class="form-check-label" for="gradiant">
+                                            Gradiant
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 future-box" [class.show]="colorType && colorType == 'gradiant'">
+                        <div class="future-option" *ngIf="colorType && colorType == 'gradiant'"
+                            formGroupName="gradient">
+                            <div class="delivery-items">
+                                <div>
+                                    <h4>{{ 'Gradiant Type' | translate }}:</h4>
+                                    <ul>
+                                        <li [class.active]="selectedIndex && (i + 1) == selectedIndex"
+                                            *ngFor="let item of gradiantTypes; let i = index"
+                                            (click)="setSelectedGradiantType(item, (i + 1))">
+                                            <a href="javascript:void(0)">{{item}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="mt-3" formArrayName="colorStops">
+                                    <h4>{{ 'Gradiant Style' | translate }}:</h4>
+                                    <ul>
+                                        <li *ngFor="let child of cmn; let i=index" formGroupName="{{i}}">
+                                            <!-- <input type="hidden" name="offset" formControlName="offset" value="{{i}}" /> -->
+                                            <a href="javascript:void(0)" class="color-box">
+                                                <input class="form-control" type="color" formControlName="color">
+                                                Color {{i+1}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 future-box" [class.show]="colorType && colorType == 'color'">
+                        <div class="future-option" *ngIf="colorType && colorType == 'color'">
+                            <div class="delivery-items">
+                                <div>
+                                    <h4>{{ 'Select Color' | translate }}:</h4>
+
+                                    <ul>
+                                        <li>
+                                            <div class="color-box">
+                                                <input class="form-control" type="color" formControlName="color">
+                                            </div>
+                                        </li>
+
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </li>
+    </ul>
+</form>

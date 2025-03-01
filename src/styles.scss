@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/scss/app.scss";
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
+.static-l-dir {
+  direction: ltr;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.image-container {
+  position: relative;
+}
+
+.image-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  text-align: center;
+  padding: 10px;
+}

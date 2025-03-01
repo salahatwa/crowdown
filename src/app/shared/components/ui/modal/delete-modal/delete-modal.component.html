@@ -1,0 +1,29 @@
+<ng-template #deleteModal let-modal>
+    <div class="modal-body">
+        <!-- <i class="icon-box ri-delete-bin-line"></i> -->
+        <h5 class="modal-title" *ngIf="userAction?.actionToPerform=='delete'">{{'delete_item'| translate }}
+        </h5>
+
+        <h5 class="modal-title" *ngIf="userAction?.actionToPerform=='cancel'">{{'cancel_item' | translate }}
+        </h5>
+
+        <h5 class="modal-title" *ngIf="userAction?.actionToPerform=='confirm'">{{'confirm_item' | translate }}
+        </h5>
+
+        <p *ngIf="userAction?.actionToPerform=='delete'">{{'deleted_message' | translate }} </p>
+
+        <p *ngIf="userAction?.actionToPerform=='cancel'">{{'cancelled_message'| translate }} </p>
+
+        <p *ngIf="userAction?.actionToPerform=='confirm'">{{'confirm_message'| translate }} </p>
+
+        <div class="button-box">
+            <app-button [class]="'btn-md fw-bold btn btn-secondary'" [spinner]="false" [id]="'delete_no_btn'"
+                (click)="modal.dismiss('Cancel')">
+                {{ 'no' | translate }}
+            </app-button>
+            <app-button [class]="'btn-animation btn-md fw-bold btn'" [id]="'delete_yes_btn'" (click)="delete(modal)">
+                {{ 'yes' | translate }}
+            </app-button>
+        </div>
+    </div>
+</ng-template>

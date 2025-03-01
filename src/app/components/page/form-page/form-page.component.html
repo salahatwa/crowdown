@@ -1,0 +1,71 @@
+<form class="theme-form theme-form-2 mega-form" [formGroup]="form" (ngSubmit)="submit()">
+    <app-form-fields [label]="'name'" [for]="'name'" [required]="true">
+        <input class="form-control" type="text" placeholder="{{ 'name' | translate }}" name="title"
+            formControlName="title">
+        <div class="invalid-feedback"
+            *ngIf="form.controls['title'].touched && form.controls['title'].errors?.['required']">
+            {{ 'required' | translate }}
+        </div>
+
+        <div class="invalid-feedback"
+            *ngIf="form.controls['title'].touched && form.controls['title'].errors?.['pattern']">
+            {{ 'pattern_is_invalid' | translate }}
+        </div>
+    </app-form-fields>
+
+    <app-form-fields [label]="'name_tr'" [for]="'name_tr'" [required]="true">
+        <input class="form-control" type="text" placeholder="{{ 'name_tr' | translate }}" name="name_tr"
+            formControlName="title_tr">
+        <div class="invalid-feedback"
+            *ngIf="form.controls['title_tr'].touched && form.controls['title_tr'].errors?.['required']">
+            {{ 'required' | translate }}
+        </div>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['title_tr'].touched && form.controls['title_tr'].errors?.['pattern']">
+            {{ 'pattern_is_invalid' | translate }}
+        </div>
+    </app-form-fields>
+
+    <app-form-fields [label]="'content'" [for]="'content'" [required]="false">
+        <ckeditor [editor]="editor" [config]="config" formControlName="content"></ckeditor>
+        <div class="invalid-feedback"
+            *ngIf="form.controls['content'].touched && form.controls['content'].errors?.['required']">
+            {{ 'required' | translate }}
+        </div>
+    </app-form-fields>
+
+    <app-form-fields [label]="'content_tr'" [for]="'content_tr'" [required]="false">
+        <ckeditor [editor]="editor" [config]="config" formControlName="content_tr"></ckeditor>
+
+        <div class="invalid-feedback"
+            *ngIf="form.controls['content_tr'].touched && form.controls['content_tr'].errors?.['required']">
+            {{ 'required' | translate }}
+        </div>
+    </app-form-fields>
+
+    <!-- <app-form-fields [label]="'meta_title'" [for]="'metatitle'" [required]="false">
+        <input class="form-control" type="text" placeholder="{{'enter_meta_title' | translate }}" formControlName="meta_title">
+    </app-form-fields>
+    <app-form-fields [label]="'meta_description'" [for]="'desc'" [required]="false">
+        <textarea class="form-control" placeholder="{{ 'enter_meta_description' | translate }}" formControlName="meta_description" rows="3"></textarea>
+    </app-form-fields>
+    <app-form-fields [label]="'meta_image'" [for]="'meta_image'" [required]="false">
+        <app-file-upload 
+            [multipleImage]="false"
+            [mediaType]="IMAGE_TYPE.join(',')"
+            [imageUrl]="(page$ | async)?.page_meta_image"
+            (selectedFiles)="selectMetaImage($event)">
+        </app-file-upload>
+    </app-form-fields> -->
+    <app-form-fields [label]="'status'" [for]="'status'" [required]="false">
+        <div class="form-check form-switch ps-0">
+            <label class="switch">
+                <input type="checkbox" id="status" formControlName="status">
+                <span class="switch-state"></span>
+            </label>
+        </div>
+    </app-form-fields>
+    <app-button [id]="'page_btn'">
+        {{ (type == 'create' ? 'save_page' : 'update_page') | translate }}
+    </app-button>
+</form>

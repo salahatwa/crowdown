@@ -1,0 +1,38 @@
+<div class="row g-sm-4 g-2">
+    <div class="col-xl-12">
+        <div class="row roles-form">
+            <ng-container *ngFor="let role of (roles$ | async)?.data; let i = index">
+                <div class="col-12">
+                    <ul>
+                        <li>{{ role?.name.replace('_', ' ') | titlecase }} </li>
+                        <li>
+                            <div class="form-check form-switch">
+                                <input class="checkbox_animated form-check-input checkall" 
+                                    type="checkbox" 
+                                    id="role-{{role.id}}"
+                                    [checked]="role.isChecked"
+                                    (change)="checkUncheckAll($event, role)">
+                                <label class="form-check-label m-0 form-label" for="role-{{role.id}}">{{ 'All' }}</label>
+                            </div>
+                        </li>
+                        <ng-container *ngFor="let permission of role.permissions">
+                            <li>
+                                <div class="form-check form-switch">
+                                    <input class="checkbox_animated form-check-input check-it" 
+                                        [name]="permission.name"
+                                        type="checkbox" id="{{ permission.id }}" 
+                                        [checked]="selectedPermission?.includes(permission.id) || permission.isChecked ? true : false" 
+                                        [value]="permission.id"
+                                        (change)="permission.name === 'index' && permission.isChecked ? checkIndex($event, role) : onPermissionChecked($event, role)">
+                                    <label class="form-check-label m-0 form-label" for="{{ permission.id }}">
+                                        {{ permission.name | titlecase | role}}
+                                    </label>
+                                </div>
+                            </li>
+                        </ng-container>
+                    </ul>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

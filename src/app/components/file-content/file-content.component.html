@@ -1,0 +1,14 @@
+<app-page-wrapper [gridClass]="'col-sm-12'" [title]="'files'">
+    <div button *hasPermission="'page.create'">
+        <a [routerLink]="['/file-content/create']" class="align-items-center btn btn-animation d-flex">
+            <i class="ri-add-line"></i> {{ 'add_file' | translate }}
+        </a>
+    </div>
+    <app-table 
+        [tableConfig]="tableConfig"
+        [hasCheckbox]="false"
+        (tableChanged)="onTableChange($event)"
+        (rowClicked)="edit($event)"
+        (action)="onActionClicked($event)">
+    </app-table>
+</app-page-wrapper>

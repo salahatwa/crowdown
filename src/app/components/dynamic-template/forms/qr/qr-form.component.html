@@ -1,0 +1,226 @@
+<div class="inside-horizontal-tabs mt-0">
+    <form class="theme-form theme-form-2 mega-form" [formGroup]="qrForm" (ngSubmit)="submit();" autocomplete="off">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+            <li ngbNavItem="general">
+                <a ngbNavLink><i class="ri-account-pin-box-line"></i>{{ 'general' | translate }}</a>
+                <ng-template ngbNavContent>
+
+                    <div class="row">
+
+                        <app-form-fields [label]="'width'" [for]="'width'" [required]="true">
+                            <input class="form-control" type="number" placeholder="{{ 'width' | translate }}"
+                                name="width" formControlName="width">
+                            <div class="invalid-feedback"
+                                *ngIf="qrForm.controls['width'].touched && qrForm.controls['width'].errors?.['required']">
+                                {{ 'Field is required' | translate }}
+                            </div>
+                        </app-form-fields>
+
+
+                        <app-form-fields [label]="'height'" [for]="'height'" [required]="true">
+                            <input class="form-control" type="number" placeholder="{{ 'height' | translate }}"
+                                name="height" formControlName="height">
+                            <div class="invalid-feedback"
+                                *ngIf="qrForm.controls['height'].touched && qrForm.controls['height'].errors?.['required']">
+                                {{ 'Field is required' | translate }}
+                            </div>
+                        </app-form-fields>
+
+
+                        <app-form-fields [label]="'Shape'" [for]="'Shape'" [required]="true">
+                            <select2 class="custom-select" [data]="shapeOptions"
+                                [placeholder]="'select_shape' | translate" formControlName="shape" resettable>
+                            </select2>
+                        </app-form-fields>
+
+                        <div formGroupName="cornersSquareOptions">
+                            <app-form-fields [label]="'Corners'" [for]="'cornersSquareOptions'" [required]="true">
+                                <select2 class="custom-select" [data]="cornorOptions"
+                                    [placeholder]="'select_corner' | translate" formControlName="type" resettable>
+                                </select2>
+                            </app-form-fields>
+                        </div>
+
+
+                        <div formGroupName="qrOptions">
+                            <app-form-fields [label]="'Error corection level'" [for]="'errorCorrectionLevel'"
+                                [required]="true">
+                                <select2 class="custom-select" [data]="correctionLevels"
+                                    [placeholder]="'select_correction_level' | translate"
+                                    formControlName="errorCorrectionLevel" resettable>
+                                </select2>
+                            </app-form-fields>
+                        </div>
+
+
+                        <div formGroupName="dotsOptions">
+                            <app-form-fields [label]="'Dots Style'" [for]="'dotsStyle'" [required]="true">
+                                <select2 class="custom-select" [data]="dotsOptions"
+                                    [placeholder]="'select_dots_type' | translate" formControlName="type" resettable>
+                                </select2>
+                            </app-form-fields>
+                        </div>
+
+                        <div formGroupName="cornersDotOptions">
+                            <app-form-fields [label]="'Cornor Dots Style'" [for]="'cornersDotOptions'"
+                                [required]="true">
+                                <select2 class="custom-select" [data]="cornerDotsOptions"
+                                    [placeholder]="'select_dots_type' | translate" formControlName="type" resettable>
+                                </select2>
+                            </app-form-fields>
+                        </div>
+
+                    </div>
+                    <!-- <app-button [id]="'profile_btn'">{{ 'save' | translate }}</app-button> -->
+
+                </ng-template>
+            </li>
+
+            <li ngbNavItem="Colors">
+                <a ngbNavLink><i class="ri-phone-lock-line"></i> {{ 'Colors' | translate }}</a>
+                <ng-template ngbNavContent>
+                    <div class="checkout-section-2">
+                        <div class="left-sidebar-checkout">
+                            <div class="checkout-detail-box">
+                                <ul>
+
+                                    <li>
+                                        <div class="checkout-icon">
+                                            <i class="ri-truck-line"></i>
+                                        </div>
+                                        <div class="checkout-box">
+                                            <div class="checkout-title">
+                                                <h4>{{ 'Background' | translate }}</h4>
+                                            </div>
+
+                                            <div class="row">
+                                                <div formGroupName="backgroundOptions">
+                                                    <app-qr-color [formGroup]="qrForm"
+                                                        [formGroupNameDt]="'backgroundOptions'"
+                                                        [defGradiant]="'#ffffff'"></app-qr-color>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="checkout-icon">
+                                            <i class="ri-truck-line"></i>
+                                        </div>
+                                        <div class="checkout-box">
+                                            <div class="checkout-title">
+                                                <h4>{{ 'Dots' | translate }}</h4>
+                                            </div>
+
+                                            <div class="row">
+                                                <div formGroupName="dotsOptions">
+                                                    <app-qr-color [formGroup]="qrForm" [formGroupNameDt]="'dotsOptions'"
+                                                        [defGradiant]="'#000000'"></app-qr-color>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="checkout-icon">
+                                            <i class="ri-truck-line"></i>
+                                        </div>
+                                        <div class="checkout-box">
+                                            <div class="checkout-title">
+                                                <h4>{{ 'Cornor Dots' | translate }}</h4>
+                                            </div>
+
+                                            <div class="row">
+                                                <div formGroupName="cornersDotOptions">
+                                                    <app-qr-color [formGroup]="qrForm"
+                                                        [formGroupNameDt]="'cornersDotOptions'"
+                                                        [defGradiant]="'#000000'"></app-qr-color>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="checkout-icon">
+                                            <i class="ri-truck-line"></i>
+                                        </div>
+                                        <div class="checkout-box">
+                                            <div class="checkout-title">
+                                                <h4>{{ 'Cornor Square' | translate }}</h4>
+                                            </div>
+
+                                            <div class="row">
+                                                <div formGroupName="cornersSquareOptions">
+                                                    <app-qr-color [formGroup]="qrForm"
+                                                        [formGroupNameDt]="'cornersSquareOptions'"
+                                                        [defGradiant]="'#000000'"></app-qr-color>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <!--  -->
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+            </li>
+
+            <li ngbNavItem="Image">
+                <a ngbNavLink><i class="ri-phone-lock-line"></i> {{ 'Image' | translate }}</a>
+                <ng-template ngbNavContent>
+                    <app-form-fields [label]="'Logo'" [for]="'logo'" [required]="false">
+                        <app-file-upload [multipleImage]="false" [mediaType]="FILE_TYPE.join(',')"
+                            [imageUrl]="this.qrForm.get('image')?.value" (selectedFiles)="selectMetaImage($event)">
+                        </app-file-upload>
+                    </app-form-fields>
+
+                    <div formGroupName="imageOptions">
+                        <app-form-fields [label]="'Logo size'" [for]="'logoSize'" [required]="true">
+                            <input class="form-control" type="number" placeholder="{{ 'Size' | translate }}"
+                                name="imageSize" formControlName="imageSize">
+                            <!-- <div class="invalid-feedback"
+                                *ngIf="qrForm.controls['imageSize'].touched && qrForm.controls['imageSize'].errors?.['required']">
+                                {{ 'Field is required' | translate }}
+                            </div> -->
+                        </app-form-fields>
+                    </div>
+
+                </ng-template>
+            </li>
+
+            <li ngbNavItem="Frames">
+                <a ngbNavLink><i class="ri-phone-lock-line"></i> {{ 'Frames' | translate }}</a>
+                <ng-template ngbNavContent>
+
+
+                    <div formGroupName="frameOptions"
+                        class="row row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 g-4">
+                        <div *ngFor="let item of (items$ | async)?.data?.content">
+                            <div class="selection-box text-center">
+                                <input name="shop-layout" type="radio" [id]="item?.name" [value]="item?.content"
+                                    name="style" formControlName="style" (change)="onSelectFrame($event)"/>
+                                <label [for]="item.name">
+                                    <div>
+                                        <div style="margin:auto;width: 50px;" [innerHTML]="item?.content |secure">
+                                        </div>
+                                    </div>
+                                    <h4 class="mt-2">{{ item?.name }}</h4>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+            </li>
+
+        </ul>
+    </form>
+    <div [ngbNavOutlet]="nav" class="mt-3"></div>
+</div>

@@ -1,0 +1,138 @@
+<app-loader *ngIf="(loadingStatus$ | async)"></app-loader>
+<div class="checkout-section-2">
+    <div class="container-fluid">
+        <div class="row g-sm-4 g-3">
+            <div class="col-xxl-8 col-xl-7">
+                <div class="left-sidebar-checkout">
+                    <div class="checkout-detail-box">
+                        <ul>
+                            <li>
+                                <div class="checkout-icon">
+                                    <i class="ri-user-line"></i>
+                                </div>
+                                <div class="checkout-box">
+                                    <div class="checkout-title">
+                                        <h4>{{ 'select_customer' | translate }}</h4>
+                                        <!-- <a href="javascript:void(0)" class="d-flex align-items-center fw-bold"
+                                            (click)="AddCustomerModal.openModal()" *hasPermission="'order.create'">
+                                            <i class="ri-add-line me-1"></i> {{ 'add_new' | translate }}
+                                        </a> -->
+                                    </div>
+                                    <form [formGroup]="form" autocomplete="off">
+                                        <div formGroupName="consumer">
+                                            <select2 class="custom-select" [placeholder]="'select_customer' | translate"
+                                                [data]="(customers$ | async)?.length ? (customers$ | async) : []"
+                                                formControlName="identity" [customSearchEnabled]="true"
+                                                noResultMessage="{{'no_data_found' | translate }}"
+                                                (close)="userDropdown($event)" (search)="searchUser($event)"
+                                                (update)="selectUser($event)">
+                                            </select2>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="checkout-icon">
+                                    <i class="ri-bank-card-line"></i>
+                                </div>
+                                <div class="checkout-box">
+                                    <div class="checkout-title">
+                                        <h4>{{ 'payment_options' | translate }}</h4>
+                                    </div>
+                                    <div class="empty-box" *ngIf="(selectedUser$ | async)">
+                                        <h2>{{ 'no_payment_options_found' | translate }}</h2>
+                                    </div>
+                                    <app-payment-block (selectPaymentMethod)="selectPaymentMethod($event)">
+                                    </app-payment-block>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-xl-5">
+                <div class="card pos-detail-card">
+                    <div class="card-body">
+                        <div class="title-header">
+                            <div class="d-flex align-items-center">
+                                <h5>{{ 'checkout' | translate }}</h5>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <app-no-data [class]="'empty-cart'" [image]="'assets/svg/empty-cart.svg'"
+                                [text]="'No items in a cart'" *ngIf="!(cartItem$ | async).length">
+                            </app-no-data>
+                            <ul class="cart-listing" *ngIf="(cartItem$ | async).length">
+                                <li *ngFor="let item of cartItem$ | async">
+                                    <img [src]="item?.product?.thumbnail 
+                                                ? item?.product?.thumbnail 
+                                                : 'assets/images/product.png'" class="img-fluid" alt="product">
+                                    <div class="cart-content">
+                                        <h4>{{ item?.product?.name }}</h4>
+                                        <h5 class="text-theme">
+                                            {{ item?.product?.price | currencySymbol }} X {{ item?.quantity }}
+                                        </h5>
+                                        <h5 class="price">
+                                            {{ item?.product?.price * item?.quantity | currencySymbol }}
+                                        </h5>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <form [formGroup]="form" (ngSubmit)="placeorder()" autocomplete="off">
+                            <div class="custom-box-loader">
+                                <div class="box-loader" *ngIf="loading">
+                                    <app-loader [loaderClass]="'custom-loader-wrapper blur-bg'"></app-loader>
+                                </div>
+                                <ul class="summary-total">
+                                    <li>
+                                        <h4>{{ 'subtotal' | translate }}</h4>
+                                        <h4 class="price">
+                                            {{ ((checkout$ | async) ? ((checkout$ | async)?.subtotal| currencySymbol) :
+                                            'not_calculated_yet' | translate) }}
+                                        </h4>
+                                    </li>
+
+                                    <li>
+                                        <h4>{{ 'tax' | translate }}</h4>
+                                        <h4 class="price">
+                                            {{ ((checkout$ | async) ? ((checkout$ | async)?.total_tax | currencySymbol) :
+                                            'not_calculated_yet' | translate) }}
+                                        </h4>
+                                    </li>
+
+                                    <li>
+                                        <h4>{{ 'commission' | translate }}</h4>
+                                        <h4 class="price">
+                                            {{ ((checkout$ | async) ? ((checkout$ | async)?.total_commission | currencySymbol) :
+                                            'not_calculated_yet' | translate) }}
+                                        </h4>
+                                    </li>
+
+
+
+                                    <li class="list-total">
+                                        <h4>{{ 'total' | translate }}</h4>
+                                        <h4 class="price">
+                                            {{ ((checkout$ | async) ? ((checkout$ | async)?.total | currencySymbol) :
+                                            'not_calculated_yet' | translate ) }}
+                                        </h4>
+                                    </li>
+                                </ul>
+                                <ng-container *hasPermission="'order.create'">
+                                    <app-button [class]="'btn btn-animation ms-auto mt-4 w-100'" [id]="'place_order'"
+                                        [disabled]="form.invalid">
+                                        {{ 'place_order' | translate }}
+                                    </app-button>
+                                </ng-container>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <app-customer-modal #AddCustomerModal></app-customer-modal>
+<app-address-modal #addAddressModal [id]="form.controls['consumer_id'].value"></app-address-modal>
+<app-coupon-modal #couponModal></app-coupon-modal> -->
