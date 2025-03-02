@@ -24,5 +24,5 @@ FROM nginx:latest AS ngi
 COPY --from=build /dist/src/app/dist/Fastkart-Admin-SSR/browser /usr/share/nginx/html
 COPY /nginx.conf  /etc/nginx/conf.d/default.conf
 # Exposing a port, here it means that inside the container 
-# the app will be using Port 80 while running
-EXPOSE 8084
+# the app will be using Port 8084 while running
+EXPOSE 8083
