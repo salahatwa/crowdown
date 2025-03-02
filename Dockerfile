@@ -53,8 +53,8 @@ COPY --from=build /app/dist/crowdown /usr/share/nginx/html
 # Copy the custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 80
-EXPOSE 80
+# Expose port 8084
+EXPOSE 8084
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
