@@ -23,8 +23,7 @@
               "@ckeditor/ckeditor5-build-classic",
               "apexcharts"
             ],
-            "outputPath": "dist/crowdown",
-            "baseHref": "/crowdown/",
+            "outputPath": "dist/Fastkart-Admin-SSR/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
