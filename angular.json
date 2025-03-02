@@ -24,7 +24,7 @@
               "apexcharts"
             ],
             "outputPath": "dist/crowdown",
-            "baseHref": "/crowdown",
+            "baseHref": "/crowdown/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
