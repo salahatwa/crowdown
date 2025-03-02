@@ -24,6 +24,7 @@
               "apexcharts"
             ],
             "outputPath": "dist/Fastkart-Admin-SSR/browser",
+            "baseHref": "crowdown",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
